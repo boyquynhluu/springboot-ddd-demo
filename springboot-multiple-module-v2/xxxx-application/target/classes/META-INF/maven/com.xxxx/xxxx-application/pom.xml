@@ -1,0 +1,27 @@
+<project xmlns='http://maven.apache.org/POM/4.0.0'>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.xxxx</groupId>
+        <artifactId>xxxx</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>xxxx-application</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.xxxx</groupId>
+            <artifactId>xxxx-domain</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+    </dependencies>
+</project>
