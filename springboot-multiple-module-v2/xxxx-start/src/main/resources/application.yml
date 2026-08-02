@@ -10,8 +10,8 @@ spring:
 
 resilience4j:
   circuitbreaker:
-    configs:
-      default:
+    instances:
+      checkRandom:
         registerHealthIndicator: true
         slidingWindowSize: 10
         permittedNumberOfCallsInHalfOpenState: 3
@@ -33,3 +33,15 @@ resilience4j:
         limitForPeriod: 5
         limitRefreshPeriod: 10ms
         timeoutDuration: 3s
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
