@@ -21,8 +21,25 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '21'
+          java-version: "21"
           cache: maven
 
       - name: Build Project
         run: mvn clean package
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker Image
+        run: |
+          docker build \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/spring-app:latest \
+            .
+
+      - name: Push Docker Image
+        run: |
+          docker push \
+            ${{ secrets.DOCKERHUB_USERNAME }}/spring-app:latest
