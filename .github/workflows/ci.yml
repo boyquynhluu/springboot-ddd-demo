@@ -7,7 +7,8 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     defaults:
       run:
@@ -27,6 +28,13 @@ jobs:
       - name: Build Project
         run: mvn clean package
 
+      - name: SonarQube Scan
+        run: >
+          mvn sonar:sonar
+          -Dsonar.projectKey=springboot-multiple-module-v2
+          -Dsonar.host.url=http://localhost:9000
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+
       - name: Debug current derectory
         run: |
             pwd
@@ -44,6 +52,12 @@ jobs:
             -t ${{ secrets.DOCKERHUB_USERNAME }}/spring-app:latest \
             .
 
+      - name: Verify app.jar size
+        run: |
+            docker run --rm \
+            --entrypoint sh \
+            ${{ secrets.DOCKERHUB_USERNAME }}/spring-app:latest \
+            -c "ls -lh /app/app.jar"
       - name: Push Docker Image
         run: |
           docker push \
